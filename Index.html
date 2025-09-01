@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sabil – Application musulmane tout-en-un</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>html{scroll-behavior:smooth}</style>
+  <meta name="description" content="Sabil – Horaires de prière, Qibla, Coran, apprentissage de la Salat et de l’arabe. Une application musulmane complète, simple et accessible." />
+</head>
+<body class="bg-neutral-50 text-neutral-900">
+  <!-- Header -->
+  <header class="max-w-3xl mx-auto px-4 py-6 flex items-center gap-3">
+    <div class="shrink-0">
+      <!-- Logo simple SVG (croissant et étoile) -->
+      <svg aria-hidden="true" viewBox="0 0 64 64" class="w-10 h-10">
+        <circle cx="32" cy="32" r="30" fill="#0F5E4D"/>
+        <path d="M40 12a18 18 0 1 0 0 40 20 20 0 1 1 0-40z" fill="#F3EBDD"/>
+        <path d="M44 22l2 4 4 1-3 3 1 4-4-2-4 2 1-4-3-3 4-1z" fill="#F3EBDD"/>
+      </svg>
+    </div>
+    <div>
+      <h1 class="text-xl font-bold">Sabil</h1>
+      <p class="text-sm text-neutral-600">Horaires • Qibla • Coran • Salat • Arabe • Invocations</p>
+    </div>
+    <div class="ml-auto">
+      <a href="#inscription" class="inline-flex items-center rounded-2xl px-4 py-2 bg-emerald-700 text-white text-sm font-medium shadow hover:bg-emerald-800">
+        Rejoindre la bêta
+      </a>
+    </div>
+  </header>
+  <nav class="sticky top-0 z-10 bg-neutral-50/90 backdrop-blur border-b">
+    <div class="max-w-3xl mx-auto px-4 py-2 flex flex-wrap gap-3 text-sm">
+      <a href="#timings" class="hover:underline">Horaires</a>
+      <a href="#qibla" class="hover:underline">Qibla</a>
+      <a href="#coran" class="hover:underline">Coran</a>
+      <a href="#aide" class="hover:underline">Débutants</a>
+      <a href="#inscription" class="ml-auto hover:underline">Bêta</a>
+    </div>
+  </nav>
+
+  <main class="max-w-3xl mx-auto px-4 pb-24">
+    <!-- Hero -->
+    <section class="bg-white rounded-2xl p-6 shadow">
+      <h2 class="text-lg font-semibold">Ton compagnon de foi au quotidien</h2>
+      <p class="mt-2 text-neutral-600">Avec Sabil, accède à tes horaires de prière, l’orientation de la Kaaba, le Coran, et des guides pour progresser dans ta pratique et ton apprentissage.</p>
+      <div class="mt-4 flex flex-wrap items-center gap-3">
+        <button id="btnLocate" class="rounded-2xl px-4 py-2 bg-neutral-900 text-white text-sm font-medium hover:opacity-90">Autoriser la localisation</button>
+        <div class="flex items-center gap-2 text-sm">
+          <label for="method" class="text-neutral-600">Méthode :</label>
+          <select id="method" class="rounded-xl border px-2 py-1 bg-white">
+            <option value="3" selected>Muslim World League</option>
+            <option value="12">France (UOIF)</option>
+            <option value="2">ISNA</option>
+            <option value="5">Egyptian Authority</option>
+            <option value="4">Umm Al‑Qura (Makkah)</option>
+            <option value="15">Moonsighting Committee</option>
+          </select>
+        </div>
+        <div class="flex items-center gap-2 text-sm">
+          <label for="school" class="text-neutral-600">Asr :</label>
+          <select id="school" class="rounded-xl border px-2 py-1 bg-white">
+            <option value="0" selected>Shafi‘</option>
+            <option value="1">Hanafi</option>
+          </select>
+        </div>
+      </div>
+      <p id="status" class="mt-3 text-sm text-neutral-600"></p>
+    </section>
+
+    <!-- Grid: Timings / Qibla / Hijri / Mosques -->
+    <section class="mt-6 grid md:grid-cols-2 gap-6">
+      <!-- Timings -->
+      <div class="bg-white rounded-2xl p-6 shadow">
+        <h3 id="timings" class="text-base font-semibold">Horaires de prière</h3>
+        <p id="timingDate" class="text-sm text-neutral-600"></p>
+        <div id="timings" class="mt-3">
+          <div class="text-sm text-neutral-500">Autorise la localisation pour afficher les horaires…</div>
+        </div>
+      </div>
+
+      <!-- Qibla -->
+      <div class="bg-white rounded-2xl p-6 shadow">
+        <h3 id="qibla" class="text-base font-semibold">Qibla (direction de La Mecque)</h3>
+        <div class="mt-3 flex items-center gap-4">
+          <div class="relative w-40 h-40">
+            <div class="absolute inset-0 rounded-full border"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="text-xs text-neutral-500">Nord ↑</div>
+            </div>
+            <div id="qiblaArrow" class="absolute left-1/2 top-1/2 origin-bottom -translate-x-1/2 -translate-y-full">
+              <div class="w-0 h-0 border-l-4 border-r-4 border-b-[56px] border-l-transparent border-r-transparent" style="border-bottom-color:#0F5E4D"></div>
+              <div class="w-1 h-12 bg-emerald-800 mx-auto"></div>
+            </div>
+          </div>
+          <div>
+            <p class="text-sm text-neutral-700">Tourne le téléphone jusqu’à aligner la flèche vers le haut (Nord), puis oriente‑toi selon l’angle indiqué.</p>
+            <p id="qiblaInfo" class="mt-2 text-sm font-medium"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hijri -->
+      <div class="bg-white rounded-2xl p-6 shadow">
+        <h3 class="text-base font-semibold">Calendrier hégirien (aujourd’hui)</h3>
+        <p id="hijri" class="mt-2 text-sm text-neutral-700">—</p>
+      </div>
+
+      <!-- Mosques -->
+      <div class="bg-white rounded-2xl p-6 shadow">
+        <h3 class="text-base font-semibold">Mosquées proches</h3>
+        <p class="mt-2 text-sm text-neutral-700">Ouvre ta carte préférée pour « mosquée » près de toi :</p>
+        <div class="mt-3 flex flex-wrap gap-2" id="mapsLinks">
+          <a id="gmap" target="_blank" class="rounded-xl px-3 py-2 text-sm bg-neutral-900 text-white">Google Maps</a>
+          <a id="osm" target="_blank" class="rounded-xl px-3 py-2 text-sm bg-white border">OpenStreetMap</a>
+          <a id="apple" target="_blank" class="rounded-xl px-3 py-2 text-sm bg-white border">Plans (Apple)</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coran & Duas -->
+    <section id="coran" class="mt-6 bg-white rounded-2xl p-6 shadow">
+      <h3 class="text-base font-semibold">Coran & Invocations</h3>
+      <ul class="mt-3 text-sm list-disc pl-5 space-y-1 text-neutral-700">
+        <li>
+          <a class="underline" href="https://quran.com" target="_blank" rel="noopener">Lire/écouter le Coran (quran.com)</a>
+        </li>
+        <li>
+          <a class="underline" href="https://sunnah.com/duas" target="_blank" rel="noopener">Invocations (du‘â) courantes (sunnah.com)</a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Section Aide Nouveaux Musulmans -->
+    <section id="aide" class="mt-6 bg-white rounded-2xl p-6 shadow">
+      <h3 class="text-base font-semibold">Aide pour les nouveaux musulmans</h3>
+      <ul class="mt-3 text-sm list-disc pl-5 space-y-1 text-neutral-700">
+        <li><a href="https://muslimpro.com/learn-salat" target="_blank" class="underline">Apprendre à faire la Salat (guides pas-à-pas)</a></li>
+        <li><a href="https://www.youtube.com/results?search_query=apprendre+salat+français" target="_blank" class="underline">Tutoriels vidéo de la Salat</a></li>
+        <li><a href="https://arabic.guide" target="_blank" class="underline">Apprentissage de l’alphabet arabe</a></li>
+        <li><a href="https://duolingo.com/course/ar/en/Learn-Arabic" target="_blank" class="underline">Apprendre l’arabe (écrit et oral)</a></li>
+      </ul>
+    </section>
+
+    <!-- Inscription beta -->
+    <section id="inscription" class="mt-6 bg-white rounded-2xl p-6 shadow">
+      <h3 class="text-base font-semibold">Rejoindre la bêta</h3>
+      <p class="text-sm text-neutral-700">Laisse ton e‑mail pour être informé(e) :</p>
+      <form class="mt-3" action="mailto:contact@example.com" method="post" enctype="text/plain">
+        <div class="grid md:grid-cols-2 gap-3">
+          <input required type="text" name="nom" placeholder="Nom" class="rounded-xl border px-3 py-2" />
+          <input required type="email" name="email" placeholder="Email" class="rounded-xl border px-3 py-2" />
+        </div>
+        <button class="mt-3 rounded-2xl px-4 py-2 bg-emerald-700 text-white text-sm font-medium hover:bg-emerald-800">M’inscrire</button>
+      </form>
+    </section>
+
+    <footer class="mt-10 text-center text-xs text-neutral-500">
+      <p>© Sabil — MVP communautaire. Données horaires par Aladhan API. Vérifie toujours localement avec ta mosquée.</p>
+    </footer>
+  </main>
+
+  <!-- Scripts identiques au précédent (timings, qibla, hijri) -->
+  <script>
+    const statusEl = document.getElementById('status');
+    const timingsEl = document.getElementById('timings');
+    const timingDateEl = document.getElementById('timingDate');
+    const hijriEl = document.getElementById('hijri');
+    const btnLocate = document.getElementById('btnLocate');
+    const methodSel = document.getElementById('method');
+    const schoolSel = document.getElementById('school');
+    const qiblaArrow = document.getElementById('qiblaArrow');
+    const qiblaInfo = document.getElementById('qiblaInfo');
+
+    let lastCoords = null;
+
+    function setMapLinks(lat, lon) {
+      document.getElementById('gmap').href = `https://www.google.com/maps/search/?api=1&query=mosque&center=${lat},${lon}`;
+      document.getElementById('osm').href = `https://www.openstreetmap.org/#map=14/${lat}/${lon}`;
+      document.getElementById('apple').href = `https://maps.apple.com/?q=mosque&sll=${lat},${lon}`;
+    }
+
+    function renderTimings(timings) {
+      const order = ['Fajr','Sunrise','Dhuhr','Asr','Maghrib','Isha'];
+      const labels = {Fajr:'Fajr',Sunrise:'Lever',Dhuhr:'Dhouhr',Asr:'Asr',Maghrib:'Maghrib',Isha:'Icha'};
+      const list = document.createElement('ul');
+      list.className = 'divide-y rounded-xl border bg-white';
+      order.forEach(k => {
+        const li = document.createElement('li');
+        li.className = 'flex items-center justify-between px-3 py-2';
+        li.innerHTML = `<span class="text-sm">${labels[k]}</span><span class="font-medium">${timings[k]}</span>`;
+        list.appendChild(li);
+      });
+      timingsEl.innerHTML = '';
+      timingsEl.appendChild(list);
+    }
+
+    async function fetchTimings(lat, lon) {
+      const url = `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=${methodSel.value}&school=${schoolSel.value}`;
+      const res = await fetch(url);
+      const json = await res.json();
+      if (json && json.data) {
+        const { date, timings } = json.data;
+        timingDateEl.textContent = `${date.readable} — ${date.hijri.day} ${date.hijri.month.en} ${date.hijri.year} AH`;
+        renderTimings(timings);
+      }
+    }
+
+    async function fetchQibla(lat, lon) {
+      const res = await fetch(`https://api.aladhan.com/v1/qibla/${lat}/${lon}`);
+      const json = await res.json();
+      if (json && json.data) {
+        const angle = Math.round(json.data.direction);
+        qiblaArrow.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+        qiblaInfo.textContent = `Angle depuis le Nord : ${angle}°`;
+      }
+    }
+
+    async function fetchHijri(today = new Date()) {
+      const d = String(today.getDate()).padStart(2,'0');
+      const m = String(today.getMonth()+1).padStart(2,'0');
+      const y = today.getFullYear();
+      const res = await fetch(`https://api.aladhan.com/v1/gToH?date=${d}-${m}-${y}`);
+      const json = await res.json();
+      if (json && json.data) {
+        const h = json.data.hijri;
+        hijriEl.textContent = `${h.day} ${h.month.ar} (${h.month.en}) ${h.year} AH — ${h.weekday.ar} / ${h.weekday.en}`;
+      }
+    }
+
+    async function onLocate() {
+      statusEl.textContent = 'Demande de localisation…';
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        const { latitude, longitude } = pos.coords;
+        lastCoords = { lat: latitude, lon: longitude };
+        statusEl.textContent = 'Position détectée.';
+        setMapLinks(latitude, longitude);
+        await fetchTimings(latitude, longitude);
+        await fetchQibla(latitude, longitude);
+        await fetchHijri();
+      }, () => { statusEl.textContent = 'Localisation refusée.'; });
+    }
+
+    btnLocate.addEventListener('click', onLocate);
+    methodSel.addEventListener('change', () => { if (lastCoords) fetchTimings(lastCoords.lat, lastCoords.lon); });
+    schoolSel.addEventListener('change', () => { if (lastCoords) fetchTimings(lastCoords.lat, lastCoords.lon); });
+    fetchHijri();
+  </script>
+</body>
+</html>

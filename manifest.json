@@ -1,0 +1,26 @@
+{
+  "name": "Sabil – compagnon de foi",
+  "short_name": "Sabil",
+  "description": "Horaires de prière, Qibla, Coran, apprentissage de la Salat et de l’arabe.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0F5E4D",
+  "theme_color": "#0F5E4D",
+  "lang": "fr",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

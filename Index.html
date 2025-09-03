@@ -319,6 +319,37 @@
     audioEl.currentTime = 0;
   });
 </script>
+<hr class="my-10 border-t-2 border-emerald-200" />
+
+<!-- ================== Bêta / Contact ================== -->
+<section id="inscription" class="py-8">
+  <h2 class="text-2xl font-bold mb-4">✉️ Rejoindre la bêta / Me contacter</h2>
+  <p class="mb-4">Laisse ton email pour recevoir les nouveautés ou poser une question. Nous répondons dès que possible.</p>
+
+  <!-- Option 1 : envoi via mailto (simple et immédiat) -->
+  <form class="space-y-4" onsubmit="
+    const to='sabil.app@example.com'; /* ← remplace par ton adresse */
+    const subject=encodeURIComponent('Inscription bêta Sabil');
+    const body=encodeURIComponent('Email : '+this.email.value+'\nMessage : '+this.message.value);
+    window.location.href=`mailto:${to}?subject=${subject}&body=${body}`;
+    return false;
+  ">
+    <div>
+      <label class="block text-sm font-medium mb-1">Email</label>
+      <input name="email" type="email" required placeholder="ton.email@exemple.com"
+             class="w-full px-3 py-2 border rounded-lg shadow-sm" />
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Message (optionnel)</label>
+      <textarea name="message" rows="4" class="w-full px-3 py-2 border rounded-lg shadow-sm"
+                placeholder="Dis-nous comment Sabil peut t’aider…"></textarea>
+    </div>
+    <button class="px-5 py-2 bg-emerald-700 text-white rounded-xl shadow hover:bg-emerald-800">Envoyer</button>
+    <p class="text-xs text-neutral-600">Tes informations ne sont utilisées que pour te répondre.</p>
+  </form>
+
+  <!-- Option 2 (facultative, plus tard) : remplacer le mailto par un Google Form / Brevo -->
+</section>
 
 
     <!-- ================== Calendrier hégirien ================== -->

@@ -212,13 +212,31 @@
 
   <!-- Alphabet cliquable -->
   <div class="grid grid-cols-6 sm:grid-cols-8 gap-3 text-center">
-    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl" data-nom="Alif" data-exemple="الله (Allah)">ا</button>
-    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl" data-nom="Ba" data-exemple="بيت (Bayt – maison)">ب</button>
-    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl" data-nom="Ta" data-exemple="تمر (Tamer – datte)">ت</button>
-    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl" data-nom="Tha" data-exemple="ثوب (Thawb – vêtement)">ث</button>
-    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl" data-nom="Jim" data-exemple="جمل (Jamal – chameau)">ج</button>
-    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl" data-nom="Ha" data-exemple="حب (Hubb – amour)">ح</button>
-    <!-- 👉 ajoute les autres lettres ici progressivement si tu veux couvrir les 28 -->
+    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl"
+            data-nom="Alif" data-exemple="الله (Allah)"
+            data-audio="https://audio.qurancdn.com/letters/001.mp3">ا</button>
+
+    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl"
+            data-nom="Ba" data-exemple="بيت (Bayt – maison)"
+            data-audio="https://audio.qurancdn.com/letters/002.mp3">ب</button>
+
+    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl"
+            data-nom="Ta" data-exemple="تمر (Tamer – datte)"
+            data-audio="https://audio.qurancdn.com/letters/003.mp3">ت</button>
+
+    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl"
+            data-nom="Tha" data-exemple="ثوب (Thawb – vêtement)"
+            data-audio="https://audio.qurancdn.com/letters/004.mp3">ث</button>
+
+    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl"
+            data-nom="Jim" data-exemple="جمل (Jamal – chameau)"
+            data-audio="https://audio.qurancdn.com/letters/005.mp3">ج</button>
+
+    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl"
+            data-nom="Ha" data-exemple="حب (Hubb – amour)"
+            data-audio="https://audio.qurancdn.com/letters/006.mp3">ح</button>
+
+    <!-- 👉 Tu peux dupliquer ces boutons et compléter les 28 lettres en changeant juste data-nom, data-exemple et data-audio -->
   </div>
 
   <!-- Carte d’affichage -->
@@ -226,30 +244,80 @@
     <p id="aff-lettre" class="text-6xl mb-4"></p>
     <p id="aff-nom" class="text-lg font-semibold mb-2"></p>
     <p id="aff-exemple" class="text-sm text-gray-700 mb-4"></p>
-    <button id="btnRejouer" class="px-4 py-2 bg-emerald-700 text-white rounded-xl shadow hover:bg-emerald-800">Réessayer</button>
+
+    <div class="flex gap-3 justify-center">
+      <button id="btnJouerSon" class="px-4 py-2 bg-emerald-700 text-white rounded-xl shadow hover:bg-emerald-800">
+        🔊 Écouter la prononciation
+      </button>
+      <button id="btnRejouer" class="px-4 py-2 bg-gray-200 rounded-xl shadow hover:bg-gray-300">
+        Réessayer
+      </button>
+    </div>
+
+    <p id="audioMsg" class="mt-3 text-sm text-neutral-600">Clique sur 🔊 pour entendre la lettre.</p>
   </div>
+
+  <!-- Lecteur audio caché -->
+  <audio id="audioLettre" class="hidden" preload="none"></audio>
 </section>
 
 <script>
-  const lettres = document.querySelectorAll(".lettre");
-  const carte   = document.getElementById("carte-lettre");
-  const affLettre  = document.getElementById("aff-lettre");
-  const affNom     = document.getElementById("aff-nom");
-  const affExemple = document.getElementById("aff-exemple");
-  const btnRejouer = document.getElementById("btnRejouer");
+  const lettres   = document.querySelectorAll("#exercice-arabe .lettre");
+  const carte     = document.getElementById("carte-lettre");
+  const affLettre = document.getElementById("aff-lettre");
+  const affNom    = document.getElementById("aff-nom");
+  const affEx     = document.getElementById("aff-exemple");
+  const btnPlay   = document.getElementById("btnJouerSon");
+  const btnRetry  = document.getElementById("btnRejouer");
+  const audioMsg  = document.getElementById("audioMsg");
+  const audioEl   = document.getElementById("audioLettre");
+
+  let currentAudio = "";
+
+  function setMsg(t, warn=false){
+    audioMsg.textContent = t;
+    audioMsg.className = "mt-3 text-sm " + (warn ? "text-red-600" : "text-neutral-600");
+  }
 
   lettres.forEach(btn=>{
     btn.addEventListener("click", ()=>{
-      affLettre.textContent  = btn.textContent;
-      affNom.textContent     = btn.dataset.nom;
-      affExemple.textContent = btn.dataset.exemple;
+      const letter = btn.textContent.trim();
+      const nom    = btn.dataset.nom || "";
+      const ex     = btn.dataset.exemple || "";
+      const url    = btn.dataset.audio || "";
+
+      affLettre.textContent = letter;
+      affNom.textContent    = nom;
+      affEx.textContent     = ex;
+
+      currentAudio = url;
+      if(currentAudio){
+        audioEl.src = currentAudio + "?_=" + Date.now(); // anticache
+        audioEl.load();
+        setMsg("Clique sur 🔊 pour entendre la prononciation.");
+      }else{
+        setMsg("Aucun audio pour cette lettre.", true);
+      }
+
       carte.classList.remove("hidden");
       window.scrollTo({ top: carte.offsetTop - 50, behavior: "smooth" });
     });
   });
 
-  btnRejouer.addEventListener("click", ()=>{
+  btnPlay.addEventListener("click", async ()=>{
+    if(!currentAudio){ setMsg("Aucun audio disponible.", true); return; }
+    try{
+      await audioEl.play();
+      setMsg("Lecture en cours…");
+    }catch(e){
+      setMsg("Lecture bloquée. Clique encore sur 🔊.", true);
+    }
+  });
+
+  btnRetry.addEventListener("click", ()=>{
     carte.classList.add("hidden");
+    audioEl.pause();
+    audioEl.currentTime = 0;
   });
 </script>
 

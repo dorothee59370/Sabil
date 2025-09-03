@@ -204,6 +204,55 @@
     </section>
 
     <hr class="my-10 border-t-2 border-emerald-200" />
+    <hr class="my-10 border-t-2 border-emerald-200" />
+
+<!-- ================== Exercice interactif ================== -->
+<section id="exercice-arabe" class="py-8">
+  <h2 class="text-2xl font-bold mb-6 text-center">📝 Exercice : clique sur une lettre</h2>
+
+  <!-- Alphabet cliquable -->
+  <div class="grid grid-cols-6 sm:grid-cols-8 gap-3 text-center">
+    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl" data-nom="Alif" data-exemple="الله (Allah)">ا</button>
+    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl" data-nom="Ba" data-exemple="بيت (Bayt – maison)">ب</button>
+    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl" data-nom="Ta" data-exemple="تمر (Tamer – datte)">ت</button>
+    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl" data-nom="Tha" data-exemple="ثوب (Thawb – vêtement)">ث</button>
+    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl" data-nom="Jim" data-exemple="جمل (Jamal – chameau)">ج</button>
+    <button class="lettre p-3 bg-white rounded-lg shadow border text-2xl" data-nom="Ha" data-exemple="حب (Hubb – amour)">ح</button>
+    <!-- 👉 ajoute les autres lettres ici progressivement si tu veux couvrir les 28 -->
+  </div>
+
+  <!-- Carte d’affichage -->
+  <div id="carte-lettre" class="hidden mt-8 p-6 bg-emerald-50 border rounded-xl shadow text-center">
+    <p id="aff-lettre" class="text-6xl mb-4"></p>
+    <p id="aff-nom" class="text-lg font-semibold mb-2"></p>
+    <p id="aff-exemple" class="text-sm text-gray-700 mb-4"></p>
+    <button id="btnRejouer" class="px-4 py-2 bg-emerald-700 text-white rounded-xl shadow hover:bg-emerald-800">Réessayer</button>
+  </div>
+</section>
+
+<script>
+  const lettres = document.querySelectorAll(".lettre");
+  const carte   = document.getElementById("carte-lettre");
+  const affLettre  = document.getElementById("aff-lettre");
+  const affNom     = document.getElementById("aff-nom");
+  const affExemple = document.getElementById("aff-exemple");
+  const btnRejouer = document.getElementById("btnRejouer");
+
+  lettres.forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      affLettre.textContent  = btn.textContent;
+      affNom.textContent     = btn.dataset.nom;
+      affExemple.textContent = btn.dataset.exemple;
+      carte.classList.remove("hidden");
+      window.scrollTo({ top: carte.offsetTop - 50, behavior: "smooth" });
+    });
+  });
+
+  btnRejouer.addEventListener("click", ()=>{
+    carte.classList.add("hidden");
+  });
+</script>
+
 
     <!-- ================== Calendrier hégirien ================== -->
     <section id="hijri" class="py-8">

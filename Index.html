@@ -37,32 +37,29 @@
       <svg aria-hidden="true" viewBox="0 0 64 64" class="w-10 h-10">
         <circle cx="32" cy="32" r="30" fill="#0F5E4D" />
         <path d="M40 12a18 18 0 1 0 0 40 20 20 0 1 1 0-40z" fill="#F3EBDD" />
-        <path d="M44 22l4 4 1-3 3 1 4-4-2 4 1 4-3 3-4-1z" fill="#F3EBDD" />
+        <path d="M44 22l2 4 4 1-3 3 1 4-4-2-4 2 1-4-3-3 4-1z" fill="#F3EBDD" />
       </svg>
     </div>
-
     <div>
       <h1 class="text-xl font-bold">Sabil</h1>
-      <p class="text-sm text-neutral-600">
-        Horaires • Qibla • Coran • Salat • Arabe • Invocations
-      </p>
+      <p class="text-sm text-neutral-600">Horaires • Qibla • Coran • Salat • Arabe • Invocations</p>
     </div>
-
     <div class="ml-auto">
-      <a href="#inscription" class="inline-flex items-center rounded-2xl px-4 py-2 bg-emerald-700 text-white text-sm font-medium shadow hover:bg-emerald-800">
-        Rejoindre la bêta
-      </a>
+      <a href="#inscription" class="inline-flex items-center rounded-2xl px-4 py-2 bg-emerald-700 text-white text-sm font-medium shadow hover:bg-emerald-800">Rejoindre la bêta</a>
     </div>
   </header>
 
   <!-- ================== Navigation ================== -->
   <nav class="sticky top-0 z-10 bg-neutral-50/90 backdrop-blur border-b">
     <div class="max-w-3xl mx-auto px-4 py-2 flex flex-wrap gap-3 text-sm">
+      <a href="#accueil" class="hover:underline">Accueil</a>
       <a href="#horaires" class="hover:underline">Horaires</a>
       <a href="#qibla" class="hover:underline">Qibla</a>
       <a href="#coran" class="hover:underline">Coran</a>
       <a href="#debutants" class="hover:underline">Débutants</a>
-      <a href="#inscription" class="ml-auto hover:underline">Bêta</a>
+      <a href="#hijri" class="hover:underline">Calendrier</a>
+      <a href="#mosquees" class="hover:underline">Mosquées proches</a>
+      <a href="#legal" class="ml-auto hover:underline">Légal</a>
     </div>
   </nav>
 
@@ -70,7 +67,7 @@
 
     <!-- ================== Accueil ================== -->
     <section id="accueil" class="py-8">
-      <h1 class="text-3xl font-bold text-center mb-4">Sabil – Ton compagnon de foi au quotidien</h1>
+      <h2 class="text-3xl font-bold text-center mb-4">Sabil – ton compagnon de foi au quotidien</h2>
       <p class="text-lg text-center mb-6">
         Sabil t’accompagne dans ta pratique : horaires de prière près de toi, direction de la Qibla,
         écoute du Coran, guides simples pour débuter et progresser. Tout au même endroit.
@@ -78,15 +75,15 @@
 
       <div class="grid md:grid-cols-3 gap-6 mb-8 text-center">
         <div>
-          <h2 class="text-xl font-semibold mb-2">🕒 Fiable</h2>
+          <h3 class="text-xl font-semibold mb-2">🕒 Fiable</h3>
           <p>Horaires et Qibla calculés selon des méthodes reconnues.</p>
         </div>
         <div>
-          <h2 class="text-xl font-semibold mb-2">🌍 Accessible</h2>
+          <h3 class="text-xl font-semibold mb-2">🌍 Accessible</h3>
           <p>Textes clairs, translittération et audio disponibles.</p>
         </div>
         <div>
-          <h2 class="text-xl font-semibold mb-2">💎 Gratuit</h2>
+          <h3 class="text-xl font-semibold mb-2">💎 Gratuit</h3>
           <p>Commence dès maintenant, depuis ton téléphone ou ton PC.</p>
         </div>
       </div>
@@ -97,16 +94,124 @@
         <a href="#coran" class="px-6 py-3 bg-gray-200 rounded-xl shadow hover:bg-gray-300">Écouter le Coran</a>
         <a href="#debutants" class="px-6 py-3 bg-gray-200 rounded-xl shadow hover:bg-gray-300">Je débute</a>
       </div>
+
+      <div class="mt-8 p-4 bg-amber-50 border rounded-xl text-sm text-amber-800">
+        <strong>Géolocalisation :</strong> pour calculer tes horaires et afficher la Qibla, Sabil a besoin de connaître ta position approximative. Tu peux refuser : le site fonctionnera en mode manuel.
+      </div>
+    </section>
+
+    <hr class="my-10 border-t-2 border-emerald-200" />
+
+    <!-- ================== Contrôles & statut ================== -->
+    <section class="py-6">
+      <div class="p-4 bg-white rounded-xl shadow border">
+        <div class="flex flex-wrap gap-3 items-center">
+          <button id="btnLocate" class="px-4 py-2 bg-emerald-700 text-white rounded-xl shadow hover:bg-emerald-800">Autoriser la localisation</button>
+
+          <label class="text-sm ml-auto">Méthode :
+            <select id="method" class="ml-1 px-2 py-1 border rounded-lg">
+              <option value="3">Muslim World League</option>
+              <option value="2">Islamic Society of North America (ISNA)</option>
+              <option value="4">Umm al-Qura, Makkah</option>
+              <option value="5">Egyptian General Authority</option>
+              <option value="1">University of Islamic Sciences, Karachi</option>
+            </select>
+          </label>
+
+          <label class="text-sm">Asr :
+            <select id="school" class="ml-1 px-2 py-1 border rounded-lg">
+              <option value="0">Shafi‘i / Maliki / Hanbali</option>
+              <option value="1">Hanafi</option>
+            </select>
+          </label>
+        </div>
+        <p id="status" class="mt-3 text-sm text-neutral-600">Position non détectée.</p>
+      </div>
+    </section>
+
+    <!-- ================== Horaires ================== -->
+    <section id="horaires" class="grid md:grid-cols-2 gap-6 py-4">
+      <div class="bg-white rounded-xl shadow p-4 border">
+        <h3 class="text-base font-semibold mb-3">Horaires de prière</h3>
+        <table class="w-full text-sm border-separate border-spacing-y-2">
+          <tbody id="times">
+            <tr><td>Fajr</td><td class="text-right font-medium" id="tFajr">--:--</td></tr>
+            <tr><td>Lever</td><td class="text-right font-medium" id="tSunrise">--:--</td></tr>
+            <tr><td>Dhouhr</td><td class="text-right font-medium" id="tDhuhr">--:--</td></tr>
+            <tr><td>Asr</td><td class="text-right font-medium" id="tAsr">--:--</td></tr>
+            <tr><td>Maghrib</td><td class="text-right font-medium" id="tMaghrib">--:--</td></tr>
+            <tr><td>Icha</td><td class="text-right font-medium" id="tIsha">--:--</td></tr>
+          </tbody>
+        </table>
+        <p class="mt-3 text-xs text-neutral-500" id="hijriSmall">—</p>
+        <p class="mt-2 text-xs text-neutral-500">Toujours vérifier avec ta mosquée locale.</p>
+      </div>
+
+      <!-- ================== Qibla ================== -->
+      <div class="bg-white rounded-xl shadow p-4 border">
+        <h3 class="text-base font-semibold mb-3">Qibla (direction de La Mecque)</h3>
+        <div class="flex items-center gap-4">
+          <div class="relative w-24 h-24 rounded-full border flex items-center justify-center">
+            <div class="absolute top-1/2 left-1/2 w-0.5 h-10 origin-bottom -translate-x-1/2 -translate-y-10 bg-emerald-700" id="qiblaArrow" style="transform: translate(-50%, -100%) rotate(0deg);"></div>
+            <span class="absolute top-1 text-[10px] text-neutral-500">N</span>
+          </div>
+          <p class="text-sm">
+            Tourne le téléphone jusqu’à aligner le haut vers le <strong>Nord</strong>,<br/>
+            puis oriente-toi selon l’angle indiqué.<br/>
+            <span class="font-medium" id="qiblaText">Angle depuis le Nord : —°</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="my-10 border-t-2 border-emerald-200" />
+
+    <!-- ================== Coran ================== -->
+    <section id="coran" class="py-8">
+      <h2 class="text-3xl font-bold mb-6 text-center">📖 Coran</h2>
+      <p class="text-lg text-center mb-6">
+        Écoute et lis le Coran avec traduction. Sélectionne une sourate pour commencer.
+      </p>
+
+      <!-- Sélecteur de sourates -->
+      <div class="mb-6 text-center">
+        <label for="sourate" class="block text-sm font-medium mb-2">Choisir une sourate :</label>
+        <select id="sourate" class="px-4 py-2 border rounded-lg shadow">
+          <option value="1">1 — Al-Fātiḥa</option>
+          <option value="2">2 — Al-Baqarah</option>
+          <option value="36">36 — Yā-Sīn</option>
+          <option value="55">55 — Ar-Raḥmān</option>
+          <option value="67">67 — Al-Mulk</option>
+          <option value="112">112 — Al-Ikhlāṣ</option>
+        </select>
+      </div>
+
+      <!-- Lecteur audio -->
+      <div class="text-center mb-6">
+        <audio id="lecteur-coran" controls class="w-full max-w-md mx-auto">
+          <source src="https://download.quranicaudio.com/qdc/abdul_baset/mujawwad/001.mp3" type="audio/mp3">
+          Ton navigateur ne supporte pas l’audio.
+        </audio>
+        <div class="mt-3">
+          <a id="lienQuran" target="_blank" class="text-sm underline text-emerald-700 hover:text-emerald-800" href="https://quran.com/1">Ouvrir la sourate sur Quran.com</a>
+        </div>
+      </div>
+
+      <!-- Texte d’ouverture (bismillah) -->
+      <div id="texte-coran" class="bg-gray-100 p-4 rounded-xl shadow text-center">
+        <p class="text-2xl mb-2">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+        <p class="text-gray-700 text-sm">Au nom d’Allah, le Tout Miséricordieux, le Très Miséricordieux.</p>
+      </div>
     </section>
 
     <hr class="my-10 border-t-2 border-emerald-200" />
 
     <!-- ================== Débutants ================== -->
     <section id="debutants" class="py-8">
-      <h1 class="text-3xl font-bold mb-6 text-center">Je débute : guides pas à pas</h1>
+      <h2 class="text-3xl font-bold mb-6 text-center">Je débute : guides pas à pas</h2>
 
       <!-- Wudu -->
-      <h2 class="text-2xl font-semibold mb-4">Wudu (ablutions en 10 étapes)</h2>
+      <h3 class="text-2xl font-semibold mb-4">Wudu (ablutions en 10 étapes)</h3>
       <ol class="list-decimal list-inside space-y-1 mb-8">
         <li>Intention (niyya) dans le cœur.</li>
         <li>Dire <em>Bismillah</em>.</li>
@@ -121,7 +226,7 @@
       </ol>
 
       <!-- Salat -->
-      <h2 class="text-2xl font-semibold mb-4">Salat – modèle 2 rakaʿât</h2>
+      <h3 class="text-2xl font-semibold mb-4">Salat – modèle 2 rakaʿât</h3>
       <ol class="list-decimal list-inside space-y-1 mb-8">
         <li>Intention + <em>Allāhu Akbar</em></li>
         <li>Debout : Al-Fātiḥa + sourate courte</li>
@@ -134,7 +239,7 @@
       </ol>
 
       <!-- Invocations -->
-      <h2 class="text-2xl font-semibold mb-4">Invocations utiles (adhkār)</h2>
+      <h3 class="text-2xl font-semibold mb-4">Invocations utiles (adhkār)</h3>
       <ul class="list-disc list-inside space-y-1">
         <li>Matin : <em>Subḥān Allāh</em> (33) • <em>Al-ḥamdu lillāh</em> (33) • <em>Allāhu Akbar</em> (34)</li>
         <li>Avant de dormir : <em>Bismika Allāhumma amūtu wa aḥyā</em></li>
@@ -145,7 +250,141 @@
       </p>
     </section>
 
+    <hr class="my-10 border-t-2 border-emerald-200" />
+
+    <!-- ================== Calendrier hégirien & Mosquées ================== -->
+    <section id="hijri" class="grid md:grid-cols-2 gap-6 py-4">
+      <div class="bg-white rounded-xl shadow p-4 border">
+        <h3 class="text-base font-semibold mb-2">Calendrier hégirien (aujourd’hui)</h3>
+        <p id="hijriFull" class="text-sm">—</p>
+      </div>
+      <div id="mosquees" class="bg-white rounded-xl shadow p-4 border">
+        <h3 class="text-base font-semibold mb-3">Mosquées proches</h3>
+        <p class="text-sm mb-3">Ouvre ta carte préférée pour « mosquée » près de toi :</p>
+        <div class="flex gap-3">
+          <a id="btnGmaps" target="_blank" class="px-4 py-2 bg-black text-white rounded-xl shadow">Google Maps</a>
+          <a id="btnOsm" target="_blank" class="px-4 py-2 bg-gray-200 rounded-xl shadow hover:bg-gray-300">OpenStreetMap</a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="my-10 border-t-2 border-emerald-200" />
+
+    <!-- ================== Légal (pied de page) ================== -->
+    <section id="legal" class="py-6 text-center text-sm text-neutral-600">
+      <p>© Sabil — projet non lucratif. Vérifie toujours avec ta mosquée locale.</p>
+      <p class="mt-2">
+        <a href="#" class="underline">Mentions légales</a> •
+        <a href="#" class="underline">Politique de confidentialité</a> •
+        <a href="#" class="underline">Conditions d’utilisation</a>
+      </p>
+    </section>
+
   </main>
+
+  <!-- ================== Script : horaires, qibla, hijri, cartes, coran ================== -->
+  <script>
+    const btnLocate = document.getElementById('btnLocate');
+    const methodSel = document.getElementById('method');
+    const schoolSel = document.getElementById('school');
+    const statusEl = document.getElementById('status');
+
+    const tIds = {Fajr:'tFajr', Sunrise:'tSunrise', Dhuhr:'tDhuhr', Asr:'tAsr', Maghrib:'tMaghrib', Isha:'tIsha'};
+
+    const qiblaArrow = document.getElementById('qiblaArrow');
+    const qiblaText  = document.getElementById('qiblaText');
+
+    const hijriSmall = document.getElementById('hijriSmall');
+    const hijriFull  = document.getElementById('hijriFull');
+
+    const btnGmaps = document.getElementById('btnGmaps');
+    const btnOsm   = document.getElementById('btnOsm');
+
+    let lastCoords = null;
+
+    function deg2rad(d){return d*Math.PI/180}
+    function rad2deg(r){return r*180/Math.PI}
+    function norm360(a){return (a%360+360)%360}
+
+    function computeQibla(lat, lon){
+      const lat1=deg2rad(lat), lon1=deg2rad(lon);
+      const lat2=deg2rad(21.4225), lon2=deg2rad(39.8262); // Kaaba
+      const dLon = lon2-lon1;
+      const y = Math.sin(dLon)*Math.cos(lat2);
+      const x = Math.cos(lat1)*Math.sin(lat2) - Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
+      return norm360(rad2deg(Math.atan2(y,x)));
+    }
+
+    async function fetchTimings(lat, lon){
+      const method = methodSel.value;
+      const school = schoolSel.value;
+      const url = `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=${method}&school=${school}`;
+      const r = await fetch(url);
+      const json = await r.json();
+      const t = json.data.timings;
+      const map = {Fajr:'Fajr', Sunrise:'Sunrise', Dhuhr:'Dhuhr', Asr:'Asr', Maghrib:'Maghrib', Isha:'Isha'};
+      Object.entries(map).forEach(([label,key])=>{
+        const el = document.getElementById(tIds[key]);
+        if(el) el.textContent = (t[key]||'--:--').slice(0,5);
+      });
+      // Hijri date
+      const h = json.data.date.hijri;
+      hijriSmall.textContent = `${json.data.date.readable} — ${h.day} ${h.month.en} ${h.year} AH`;
+      hijriFull.textContent  = `${h.day} ${h.month.en} ${h.year} AH — (${h.weekday.en})`;
+    }
+
+    function setMapLinks(lat, lon){
+      btnGmaps.href = `https://www.google.com/maps/search/?api=1&query=mosqu%C3%A9e&query_place_id=&center=${lat},${lon}`;
+      btnOsm.href   = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=14/${lat}/${lon}`;
+    }
+
+    async function refreshAll(){
+      if(!lastCoords) return;
+      const {lat, lon} = lastCoords;
+      statusEl.textContent = `Position : ${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+      await fetchTimings(lat, lon);
+      const bearing = computeQibla(lat, lon);
+      qiblaText.textContent = `Angle depuis le Nord : ${bearing.toFixed(0)}°`;
+      qiblaArrow.style.transform = `translate(-50%, -100%) rotate(${bearing}deg)`;
+      setMapLinks(lat, lon);
+    }
+
+    async function onLocate(){
+      statusEl.textContent = 'Demande de localisation…';
+      navigator.geolocation.getCurrentPosition(async pos=>{
+        const { latitude, longitude } = pos.coords;
+        lastCoords = {lat: latitude, lon: longitude};
+        await refreshAll();
+      }, err=>{
+        statusEl.textContent = 'Localisation refusée ou indisponible. Utilise les réglages manuels.';
+      }, { enableHighAccuracy: true, timeout: 15000 });
+    }
+
+    btnLocate.addEventListener('click', onLocate);
+    methodSel.addEventListener('change', refreshAll);
+    schoolSel.addEventListener('change', refreshAll);
+
+    // ===== Coran (audio + lien) =====
+    const selSourate = document.getElementById('sourate');
+    const lecteur    = document.getElementById('lecteur-coran');
+    const lienQuran  = document.getElementById('lienQuran');
+
+    function updateSourate(){
+      const id = selSourate.value.toString().padStart(3,'0');
+      lecteur.src = `https://download.quranicaudio.com/qdc/abdul_baset/mujawwad/${id}.mp3`;
+      lienQuran.href = `https://quran.com/${parseInt(selSourate.value,10)}`;
+      lecteur.play().catch(()=>{});
+    }
+    if(selSourate && lecteur) selSourate.addEventListener('change', updateSourate);
+
+    // Lancer un premier affichage Hijri (sans position) avec la date du navigateur
+    (function bootstrapDate(){
+      const d = new Date();
+      const greg = d.toLocaleDateString('fr-FR',{weekday:'long', day:'2-digit', month:'long', year:'numeric'});
+      hijriSmall.textContent = greg + ' — autorise la localisation pour afficher l\'hégirien ici.';
+      hijriFull.textContent  = 'Autorise la localisation pour afficher la date hégirienne précise.';
+    })();
+  </script>
 </body>
 
 </html>

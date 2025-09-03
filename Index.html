@@ -111,10 +111,10 @@
           <label class="text-sm ml-auto">Méthode :
             <select id="method" class="ml-1 px-2 py-1 border rounded-lg">
               <option value="3">Muslim World League</option>
-              <option value="2">Islamic Society of North America (ISNA)</option>
-              <option value="4">Umm al-Qura, Makkah</option>
-              <option value="5">Egyptian General Authority</option>
-              <option value="1">University of Islamic Sciences, Karachi</option>
+              <option value="2">ISNA</option>
+              <option value="4">Umm al-Qura</option>
+              <option value="5">Egyptian Authority</option>
+              <option value="1">Karachi</option>
             </select>
           </label>
 
@@ -129,7 +129,7 @@
       </div>
     </section>
 
-    <!-- ================== Horaires ================== -->
+    <!-- ================== Horaires + Qibla ================== -->
     <section id="horaires" class="grid md:grid-cols-2 gap-6 py-4">
       <div class="bg-white rounded-xl shadow p-4 border">
         <h3 class="text-base font-semibold mb-3">Horaires de prière</h3>
@@ -147,8 +147,7 @@
         <p class="mt-2 text-xs text-neutral-500">Toujours vérifier avec ta mosquée locale.</p>
       </div>
 
-      <!-- ================== Qibla ================== -->
-      <div class="bg-white rounded-xl shadow p-4 border">
+      <div id="qibla" class="bg-white rounded-xl shadow p-4 border">
         <h3 class="text-base font-semibold mb-3">Qibla (direction de La Mecque)</h3>
         <div class="flex items-center gap-4">
           <div class="relative w-24 h-24 rounded-full border flex items-center justify-center">
@@ -156,8 +155,7 @@
             <span class="absolute top-1 text-[10px] text-neutral-500">N</span>
           </div>
           <p class="text-sm">
-            Tourne le téléphone jusqu’à aligner le haut vers le <strong>Nord</strong>,<br/>
-            puis oriente-toi selon l’angle indiqué.<br/>
+            Tourne le téléphone jusqu’à aligner le haut vers le <strong>Nord</strong>, puis oriente-toi selon l’angle indiqué.<br/>
             <span class="font-medium" id="qiblaText">Angle depuis le Nord : —°</span>
           </p>
         </div>
@@ -166,14 +164,13 @@
 
     <hr class="my-10 border-t-2 border-emerald-200" />
 
-    <!-- ================== Coran ================== -->
+    <!-- ================== Coran (corrigé) ================== -->
     <section id="coran" class="py-8">
       <h2 class="text-3xl font-bold mb-6 text-center">📖 Coran</h2>
       <p class="text-lg text-center mb-6">
-        Écoute et lis le Coran avec traduction. Sélectionne une sourate pour commencer.
+        Écoute et lis le Coran avec traduction. Sélectionne une sourate puis appuie sur ▶️ si la lecture ne démarre pas.
       </p>
 
-      <!-- Sélecteur de sourates -->
       <div class="mb-6 text-center">
         <label for="sourate" class="block text-sm font-medium mb-2">Choisir une sourate :</label>
         <select id="sourate" class="px-4 py-2 border rounded-lg shadow">
@@ -186,18 +183,13 @@
         </select>
       </div>
 
-      <!-- Lecteur audio -->
       <div class="text-center mb-6">
-        <audio id="lecteur-coran" controls class="w-full max-w-md mx-auto">
-          <source src="https://download.quranicaudio.com/qdc/abdul_baset/mujawwad/001.mp3" type="audio/mp3">
-          Ton navigateur ne supporte pas l’audio.
-        </audio>
+        <audio id="lecteur-coran" controls preload="none" crossorigin="anonymous" class="w-full max-w-md mx-auto"></audio>
         <div class="mt-3">
           <a id="lienQuran" target="_blank" class="text-sm underline text-emerald-700 hover:text-emerald-800" href="https://quran.com/1">Ouvrir la sourate sur Quran.com</a>
         </div>
       </div>
 
-      <!-- Texte d’ouverture (bismillah) -->
       <div id="texte-coran" class="bg-gray-100 p-4 rounded-xl shadow text-center">
         <p class="text-2xl mb-2">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
         <p class="text-gray-700 text-sm">Au nom d’Allah, le Tout Miséricordieux, le Très Miséricordieux.</p>
@@ -210,7 +202,6 @@
     <section id="debutants" class="py-8">
       <h2 class="text-3xl font-bold mb-6 text-center">Je débute : guides pas à pas</h2>
 
-      <!-- Wudu -->
       <h3 class="text-2xl font-semibold mb-4">Wudu (ablutions en 10 étapes)</h3>
       <ol class="list-decimal list-inside space-y-1 mb-8">
         <li>Intention (niyya) dans le cœur.</li>
@@ -225,7 +216,6 @@
         <li>Invocation de fin si connue.</li>
       </ol>
 
-      <!-- Salat -->
       <h3 class="text-2xl font-semibold mb-4">Salat – modèle 2 rakaʿât</h3>
       <ol class="list-decimal list-inside space-y-1 mb-8">
         <li>Intention + <em>Allāhu Akbar</em></li>
@@ -238,7 +228,6 @@
         <li>Tachahhud (At-Taḥiyyāt) → salutations finales (taslīm)</li>
       </ol>
 
-      <!-- Invocations -->
       <h3 class="text-2xl font-semibold mb-4">Invocations utiles (adhkār)</h3>
       <ul class="list-disc list-inside space-y-1">
         <li>Matin : <em>Subḥān Allāh</em> (33) • <em>Al-ḥamdu lillāh</em> (33) • <em>Allāhu Akbar</em> (34)</li>
@@ -282,7 +271,7 @@
 
   </main>
 
-  <!-- ================== Script : horaires, qibla, hijri, cartes, coran ================== -->
+  <!-- ================== Script global ================== -->
   <script>
     const btnLocate = document.getElementById('btnLocate');
     const methodSel = document.getElementById('method');
@@ -311,30 +300,40 @@
       const lat2=deg2rad(21.4225), lon2=deg2rad(39.8262); // Kaaba
       const dLon = lon2-lon1;
       const y = Math.sin(dLon)*Math.cos(lat2);
+      const x = Math.cos(lat1)*sin(lat2) - Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
+      // correction: use Math.cos for lat2 above
+    }
+  </script>
+  <script>
+    // corrected computeQibla and the rest
+    function computeQibla(lat, lon){
+      const lat1 = lat * Math.PI/180, lon1 = lon * Math.PI/180;
+      const lat2 = 21.4225 * Math.PI/180, lon2 = 39.8262 * Math.PI/180;
+      const dLon = lon2 - lon1;
+      const y = Math.sin(dLon) * Math.cos(lat2);
       const x = Math.cos(lat1)*Math.sin(lat2) - Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
-      return norm360(rad2deg(Math.atan2(y,x)));
+      return ((Math.atan2(y, x) * 180/Math.PI) % 360 + 360) % 360;
     }
 
     async function fetchTimings(lat, lon){
-      const method = methodSel.value;
-      const school = schoolSel.value;
+      const method = document.getElementById('method').value;
+      const school = document.getElementById('school').value;
       const url = `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=${method}&school=${school}`;
       const r = await fetch(url);
       const json = await r.json();
       const t = json.data.timings;
       const map = {Fajr:'Fajr', Sunrise:'Sunrise', Dhuhr:'Dhuhr', Asr:'Asr', Maghrib:'Maghrib', Isha:'Isha'};
       Object.entries(map).forEach(([label,key])=>{
-        const el = document.getElementById(tIds[key]);
+        const el = document.getElementById({Fajr:'tFajr',Sunrise:'tSunrise',Dhuhr:'tDhuhr',Asr:'tAsr',Maghrib:'tMaghrib',Isha:'tIsha'}[key]);
         if(el) el.textContent = (t[key]||'--:--').slice(0,5);
       });
-      // Hijri date
       const h = json.data.date.hijri;
       hijriSmall.textContent = `${json.data.date.readable} — ${h.day} ${h.month.en} ${h.year} AH`;
       hijriFull.textContent  = `${h.day} ${h.month.en} ${h.year} AH — (${h.weekday.en})`;
     }
 
     function setMapLinks(lat, lon){
-      btnGmaps.href = `https://www.google.com/maps/search/?api=1&query=mosqu%C3%A9e&query_place_id=&center=${lat},${lon}`;
+      btnGmaps.href = `https://www.google.com/maps/search/?api=1&query=mosqu%C3%A9e&center=${lat},${lon}`;
       btnOsm.href   = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=14/${lat}/${lon}`;
     }
 
@@ -344,40 +343,61 @@
       statusEl.textContent = `Position : ${lat.toFixed(4)}, ${lon.toFixed(4)}`;
       await fetchTimings(lat, lon);
       const bearing = computeQibla(lat, lon);
-      qiblaText.textContent = `Angle depuis le Nord : ${bearing.toFixed(0)}°`;
-      qiblaArrow.style.transform = `translate(-50%, -100%) rotate(${bearing}deg)`;
+      document.getElementById('qiblaText').textContent = `Angle depuis le Nord : ${bearing.toFixed(0)}°`;
+      document.getElementById('qiblaArrow').style.transform = `translate(-50%, -100%) rotate(${bearing}deg)`;
       setMapLinks(lat, lon);
     }
 
-    async function onLocate(){
+    function onLocate(){
       statusEl.textContent = 'Demande de localisation…';
       navigator.geolocation.getCurrentPosition(async pos=>{
-        const { latitude, longitude } = pos.coords;
-        lastCoords = {lat: latitude, lon: longitude};
+        lastCoords = {lat: pos.coords.latitude, lon: pos.coords.longitude};
         await refreshAll();
-      }, err=>{
+      }, _=>{
         statusEl.textContent = 'Localisation refusée ou indisponible. Utilise les réglages manuels.';
       }, { enableHighAccuracy: true, timeout: 15000 });
     }
 
-    btnLocate.addEventListener('click', onLocate);
-    methodSel.addEventListener('change', refreshAll);
-    schoolSel.addEventListener('change', refreshAll);
+    document.getElementById('btnLocate').addEventListener('click', onLocate);
+    document.getElementById('method').addEventListener('change', refreshAll);
+    document.getElementById('school').addEventListener('change', refreshAll);
 
     // ===== Coran (audio + lien) =====
     const selSourate = document.getElementById('sourate');
     const lecteur    = document.getElementById('lecteur-coran');
     const lienQuran  = document.getElementById('lienQuran');
 
-    function updateSourate(){
-      const id = selSourate.value.toString().padStart(3,'0');
-      lecteur.src = `https://download.quranicaudio.com/qdc/abdul_baset/mujawwad/${id}.mp3`;
-      lienQuran.href = `https://quran.com/${parseInt(selSourate.value,10)}`;
-      lecteur.play().catch(()=>{});
-    }
-    if(selSourate && lecteur) selSourate.addEventListener('change', updateSourate);
+    const RECITERS = {
+      baset:  id3 => `https://download.quranicaudio.com/qdc/abdul_baset/mujawwad/${id3}.mp3`,
+      afasy:  n  => `https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${parseInt(n,10)}.mp3`,
+      every:  id3 => `https://everyayah.com/data/Abdul_Basit_Murattal_64kbps/${id3}.mp3`,
+    };
 
-    // Lancer un premier affichage Hijri (sans position) avec la date du navigateur
+    function pickUrls(n){
+      const id3 = n.toString().padStart(3,'0');
+      return [RECITERS.baset(id3), RECITERS.afasy(n), RECITERS.every(id3)];
+    }
+
+    function tryLoad(urls, i=0){
+      if(i >= urls.length) return;
+      lecteur.src = urls[i];
+      lecteur.load();
+      lecteur.play().catch(()=>{});
+      lecteur.onerror = () => tryLoad(urls, i+1);
+    }
+
+    function updateSourate(){
+      const n = selSourate.value;
+      tryLoad(pickUrls(n), 0);
+      lienQuran.href = `https://quran.com/${parseInt(n,10)}`;
+    }
+
+    if(selSourate && lecteur){
+      selSourate.addEventListener('change', updateSourate);
+      updateSourate(); // init
+    }
+
+    // Pré-affichage si pas de position encore
     (function bootstrapDate(){
       const d = new Date();
       const greg = d.toLocaleDateString('fr-FR',{weekday:'long', day:'2-digit', month:'long', year:'numeric'});
@@ -386,5 +406,6 @@
     })();
   </script>
 </body>
+
 
 </html>
